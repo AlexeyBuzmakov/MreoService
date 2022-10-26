@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  g_db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=mreo
+      - POSTGRES_USER=linux
+      - POSTGRES_PASSWORD=linux
+    volumes:
+      - db:/var/lib/postgresql/mreo
+    ports:
+      - "5436:5432"
+volumes:
+  db:

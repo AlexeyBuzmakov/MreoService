@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  g_db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=dps
+      - POSTGRES_USER=linux
+      - POSTGRES_PASSWORD=linux
+    volumes:
+      - db:/var/lib/postgresql/dps
+    ports:
+      - "5438:5432"
+volumes:
+  db:

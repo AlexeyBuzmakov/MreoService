@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  g_db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=insurance
+      - POSTGRES_USER=linux
+      - POSTGRES_PASSWORD=linux
+    volumes:
+      - db:/var/lib/postgresql/insurance
+    ports:
+      - "5437:5432"
+volumes:
+  db:
