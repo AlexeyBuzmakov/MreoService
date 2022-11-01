@@ -1,11 +1,11 @@
 package com.example.clientmreo.service;
 
 import com.example.clientmreo.dto.OwnerDto;
+import com.example.clientmreo.dto.RequestDto;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface OwnerService {
-    void updateOwnerTable(String name, String patronymic, String surname, String driverLicense);
+    void updateOwnerTable(RequestDto requestDto);
     Long getIdOwner(String driverLicense);
-    OwnerDto getOwnerDto(String driverLicense);
 }

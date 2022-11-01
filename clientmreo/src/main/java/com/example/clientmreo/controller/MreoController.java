@@ -1,12 +1,13 @@
 package com.example.clientmreo.controller;
 
+import com.example.clientmreo.dto.RequestDto;
 import com.example.clientmreo.service.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import static com.example.clientmreo.controller.Links.MREO;
 import static com.example.clientmreo.controller.Links.REGISTRATION;
 
@@ -27,17 +28,15 @@ public class MreoController {
      * В случае успешной проверки происходит добавление или обновление данных в таблицах
      * car_table и owner_table
      */
-    @GetMapping(REGISTRATION)
-    public String registration(@RequestParam String name, String patronymic, String surname, String driverLicense, String brand, String model, int yearIssue, String vinNumber, String number) {
-        if (!hijackingService.checkHijacking(vinNumber))
-            return "Невозможно поставить авто на учёт так как оно числится в угоне";
-        if (!penaltyService.checkPenalty(number))
-            return "Невозможно поставить авто на учёт так как имеются неоплаченные штрафы";
-        if (!insuranceService.checkInsurance(number))
-            return "Невозможно поставить авто на учёт так как отсутствует страхование";
-        ownerService.updateOwnerTable(name, patronymic, surname, driverLicense);
-        carService.updateCarTable(brand, model, yearIssue, vinNumber, number, ownerService.getOwnerDto(driverLicense), ownerService.getIdOwner(driverLicense));
-        return "Авто поставлено на учёт";
+    @PostMapping(REGISTRATION)
+    public ResponseEntity<?> registration(@RequestBody RequestDto requestDto) {
+        if (!penaltyService.checkPenalty(requestDto.getNumber())
+                || !insuranceService.checkInsurance(requestDto.getNumber())
+                || !hijackingService.checkHijacking(requestDto.getVinNumber()))
+            return ResponseEntity.badRequest().build();
+        ownerService.updateOwnerTable(requestDto);
+        carService.updateCarTable(requestDto, ownerService.getIdOwner(requestDto.getDriverLicense()));
+        return ResponseEntity.ok().build();
     }
 }
 

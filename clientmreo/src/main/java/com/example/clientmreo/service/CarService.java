@@ -1,9 +1,11 @@
 package com.example.clientmreo.service;
 
+import com.example.clientmreo.dto.CarDto;
 import com.example.clientmreo.dto.OwnerDto;
+import com.example.clientmreo.dto.RequestDto;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface CarService {
-    void updateCarTable(String brand, String model, int yearIssue, String vinNumber, String number, OwnerDto ownerDto, Long ownerId);
+    void updateCarTable(RequestDto requestDto, Long ownerId);
 }

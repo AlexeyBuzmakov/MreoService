@@ -20,8 +20,8 @@ public class DpsController {
      * Метод возвращает HijackingDto с использованием метода сервисного слоя HijackingService
      */
     @GetMapping(HIJACKING)
-    public @ResponseBody HijackingDto getInfoHijacking(@RequestParam String number) {
-        return hijackingService.getHijackingDto(number);
+    public @ResponseBody HijackingDto getInfoHijacking(@RequestParam String vinNumber) {
+        return hijackingService.getHijackingDto(vinNumber);
     }
 
     /**

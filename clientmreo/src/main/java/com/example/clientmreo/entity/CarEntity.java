@@ -26,7 +26,7 @@ public class CarEntity {
     private String model;
 
     @Column(name = "year_issue")
-    private int yearIssue;
+    private Integer yearIssue;
 
     @Column(name = "vin_number")
     private String vinNumber;

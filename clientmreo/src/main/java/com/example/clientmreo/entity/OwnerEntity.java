@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity
@@ -31,7 +31,4 @@ public class OwnerEntity {
 
     @Column(name = "driver_license")
     private String driverLicense;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "ownerEntity")
-    private List<CarEntity> carEntityList;
 }

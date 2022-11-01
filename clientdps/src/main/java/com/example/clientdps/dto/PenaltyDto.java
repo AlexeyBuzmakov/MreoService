@@ -10,7 +10,6 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class PenaltyDto {
     private String number;
     private LocalDate datePenalty;
