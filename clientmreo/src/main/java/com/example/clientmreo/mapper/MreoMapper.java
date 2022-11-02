@@ -1,8 +1,8 @@
 package com.example.clientmreo.mapper;
 
 import com.example.clientmreo.dto.CarDto;
+import com.example.clientmreo.dto.OwnerCarDto;
 import com.example.clientmreo.dto.OwnerDto;
-import com.example.clientmreo.dto.RequestDto;
 import com.example.clientmreo.entity.CarEntity;
 import com.example.clientmreo.entity.OwnerEntity;
 import org.mapstruct.Mapper;
@@ -11,8 +11,8 @@ import org.mapstruct.Mapper;
 public interface MreoMapper {
     OwnerEntity getOwnerEntity(OwnerDto ownerDto);
     CarEntity getCarEntity(CarDto carDto);
-    OwnerDto getOwnerDto(RequestDto requestDto);
-    CarDto getCarDto(RequestDto requestDto);
+    OwnerDto getOwnerDto(OwnerCarDto ownerCarDto);
+    CarDto getCarDto(OwnerCarDto ownerCarDto);
 
 
 

@@ -1,7 +1,7 @@
 package com.example.clientmreo.controller;
 
-import com.example.clientmreo.dto.RequestDto;
-import com.example.clientmreo.service.*;
+import com.example.clientmreo.dto.OwnerCarDto;
+import com.example.clientmreo.service.MreoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,11 +15,7 @@ import static com.example.clientmreo.controller.Links.REGISTRATION;
 @RequestMapping(MREO)
 @RequiredArgsConstructor
 public class MreoController {
-    private final CarService carService;
-    private final OwnerService ownerService;
-    private final HijackingService hijackingService;
-    private final PenaltyService penaltyService;
-    private final InsuranceService insuranceService;
+    private final MreoService mreoService;
 
     /**
      * Метод проверяет по входящим аргументам авто на наличие штрафов: таблица penalty_table,
@@ -29,13 +25,10 @@ public class MreoController {
      * car_table и owner_table
      */
     @PostMapping(REGISTRATION)
-    public ResponseEntity<?> registration(@RequestBody RequestDto requestDto) {
-        if (!penaltyService.checkPenalty(requestDto.getNumber())
-                || !insuranceService.checkInsurance(requestDto.getNumber())
-                || !hijackingService.checkHijacking(requestDto.getVinNumber()))
+    public ResponseEntity<?> registration(@RequestBody OwnerCarDto ownerCarDto) {
+        if (mreoService.checkPenaltyHijackingInsurance(ownerCarDto))
             return ResponseEntity.badRequest().build();
-        ownerService.updateOwnerTable(requestDto);
-        carService.updateCarTable(requestDto, ownerService.getIdOwner(requestDto.getDriverLicense()));
+        mreoService.updateOwnerCar(ownerCarDto);
         return ResponseEntity.ok().build();
     }
 }

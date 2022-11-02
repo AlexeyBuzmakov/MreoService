@@ -1,8 +1,8 @@
 package com.example.clientmreo.service.impl;
 
 import com.example.clientmreo.dto.CarDto;
+import com.example.clientmreo.dto.OwnerCarDto;
 import com.example.clientmreo.dto.OwnerDto;
-import com.example.clientmreo.dto.RequestDto;
 import com.example.clientmreo.mapper.MreoMapper;
 import com.example.clientmreo.repository.CarRepository;
 import com.example.clientmreo.service.CarService;
@@ -23,9 +23,9 @@ public class CarServiceImpl implements CarService {
      */
     @Override
     @Transactional
-    public void updateCarTable(RequestDto requestDto, Long ownerId) {
-        CarDto carDto = mreoMapper.getCarDto(requestDto);
-        OwnerDto ownerDto = mreoMapper.getOwnerDto(requestDto);
+    public void updateCarTable(OwnerCarDto ownerCarDto, Long ownerId) {
+        CarDto carDto = mreoMapper.getCarDto(ownerCarDto);
+        OwnerDto ownerDto = mreoMapper.getOwnerDto(ownerCarDto);
         if(carRepository.getCarEntityByVinNumber(carDto.getVinNumber()) == null) {
             carDto.setOwnerDto(ownerDto);
             carRepository.save(mreoMapper.getCarEntity(carDto));
