@@ -7,19 +7,17 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table(name = "hijacking_table")
-public class HijackingEntity {
+@Table(name = "hijacking")
+public class Hijacking {
     @Id
-    @SequenceGenerator(name="hijacking_tableSequence", sequenceName="hijacking_table_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="hijacking_tableSequence")
-    @Column(name = "hijacking_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "hijacking_id")
     private Long id;
 
     @Column(name = "vin_number")

@@ -1,20 +1,15 @@
 package com.example.clientmreo.repository;
 
-import com.example.clientmreo.entity.CarEntity;
+import com.example.clientmreo.entity.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-public interface CarRepository extends JpaRepository<CarEntity, Long> {
-    /**
-     * Метод возвращает CarEntity по vin_number из car_table
-     */
-    CarEntity getCarEntityByVinNumber(String vinNumber);
+import java.util.Optional;
 
+public interface CarRepository extends JpaRepository<Car, Long> {
     /**
-     * Методв обновляет запись в таблие car_table по входящим аргументам
+     * Метод возвращает Car по vin_number из car_table
      */
-    @Modifying
-    @Query(nativeQuery = true, value = "UPDATE car_table SET owner_id=:id WHERE vin_number=:vinNumber")
-    void updateCarTable(Long id, String vinNumber);
+    Optional<Car> getCarByVinNumber(String vinNumber);
 }

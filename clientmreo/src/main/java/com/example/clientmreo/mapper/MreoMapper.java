@@ -1,18 +1,14 @@
 package com.example.clientmreo.mapper;
 
-import com.example.clientmreo.dto.CarDto;
 import com.example.clientmreo.dto.OwnerCarDto;
-import com.example.clientmreo.dto.OwnerDto;
-import com.example.clientmreo.entity.CarEntity;
-import com.example.clientmreo.entity.OwnerEntity;
+import com.example.clientmreo.entity.Car;
+import com.example.clientmreo.entity.Owner;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface MreoMapper {
-    OwnerEntity getOwnerEntity(OwnerDto ownerDto);
-    CarEntity getCarEntity(CarDto carDto);
-    OwnerDto getOwnerDto(OwnerCarDto ownerCarDto);
-    CarDto getCarDto(OwnerCarDto ownerCarDto);
+    Owner getOwner(OwnerCarDto ownerCarDto);
+    Car getCar(OwnerCarDto ownerCarDto);
 
 
 

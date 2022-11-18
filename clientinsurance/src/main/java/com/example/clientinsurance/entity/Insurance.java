@@ -6,19 +6,17 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Table(name = "insurance_table")
-public class InsuranceEntity {
+@Table(name = "insurance")
+public class Insurance {
     @Id
-    @SequenceGenerator(name="insurance_tableSequence", sequenceName="insurance_table_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="insurance_tableSequence")
-    @Column(name = "client_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "insurance_id")
     private Long id;
 
     @Column(name = "number_insurance")

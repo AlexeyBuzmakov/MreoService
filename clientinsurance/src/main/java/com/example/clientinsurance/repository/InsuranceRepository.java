@@ -1,11 +1,13 @@
 package com.example.clientinsurance.repository;
 
-import com.example.clientinsurance.entity.InsuranceEntity;
+import com.example.clientinsurance.entity.Insurance;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface InsuranceRepository extends JpaRepository<InsuranceEntity, Long> {
+import java.util.Optional;
+
+public interface InsuranceRepository extends JpaRepository<Insurance, Long> {
     /**
-     * Метод возвращает InsuranceEntity по number_car из таблицы insurance_table
+     * Метод возвращает Insurance по number_car из таблицы insurance_table
      */
-    InsuranceEntity getClientEntityByNumberCar(String number);
+    Optional<Insurance> getInsuranceByNumberCar(String numberCar);
 }

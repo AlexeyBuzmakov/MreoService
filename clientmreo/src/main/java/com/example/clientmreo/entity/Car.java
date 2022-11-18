@@ -1,25 +1,27 @@
 package com.example.clientmreo.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.Setter;
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
-@Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@Table(name = "car_table")
-public class CarEntity {
+@Setter
+@Getter
+@Table(name = "car")
+public class Car {
     @Id
-    @SequenceGenerator(name="car_tableSequence", sequenceName="car_table_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="car_tableSequence")
-    @Column(name = "car_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "car_id")
     private Long id;
 
     @Column(name = "brand")
+
     private String brand;
 
     @Column(name = "model")
@@ -31,9 +33,10 @@ public class CarEntity {
     @Column(name = "vin_number")
     private String vinNumber;
 
-   @Column(name = "number_car")
-   private String number;
-    @ManyToOne
+    @Column(name = "number_car")
+    private String number;
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id")
-    private OwnerEntity ownerEntity;
+    private Owner owner;
 }

@@ -1,34 +1,41 @@
 package com.example.clientdps.controller;
 
-import com.example.clientdps.dto.HijackingDto;
-import com.example.clientdps.dto.PenaltyDto;
 import com.example.clientdps.service.HijackingService;
 import com.example.clientdps.service.PenaltyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
-import static com.example.clientdps.controller.Links.*;
 
 @RestController
-@RequestMapping(DPS)
+@RequestMapping("/dps")
 @RequiredArgsConstructor
 public class DpsController {
     private final PenaltyService penaltyService;
     private final HijackingService hijackingService;
 
     /**
-     * Метод возвращает HijackingDto с использованием метода сервисного слоя HijackingService
+     * Метод возвращает статус возможности постановки на учёт
+     * ok() - авто прошло проверку
+     * badRequest() - авто не прошло проверку
      */
-    @GetMapping(HIJACKING)
-    public @ResponseBody HijackingDto getInfoHijacking(@RequestParam String vinNumber) {
-        return hijackingService.getHijackingDto(vinNumber);
+    @GetMapping("/get-info-hijacking/{vinNumber}")
+    public ResponseEntity<?> getInfoHijacking(@PathVariable String vinNumber) {
+        if(hijackingService.checkHijacking(vinNumber)) {
+            return ResponseEntity.ok().build();
+        }
+            return ResponseEntity.badRequest().build();
     }
 
     /**
-     * Метод возвращает PenaltyDto c использованием сервисного слоя PenaltyService
+     * Метод возвращает статус возможности постановки на учёт
+     * ok() - авто прошло проверку
+     * badRequest() - авто не прошло проверку
      */
-    @GetMapping(PENALTY)
-    public @ResponseBody List<PenaltyDto> getInfoPenalty(@RequestParam String number) {
-        return penaltyService.getPenaltiesDto(number);
+    @GetMapping("/get-info-penalty/{numberCar}")
+    public ResponseEntity<?> getInfoPenalty(@PathVariable String numberCar) {
+        if(penaltyService.checkPenalty(numberCar)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
     }
 }

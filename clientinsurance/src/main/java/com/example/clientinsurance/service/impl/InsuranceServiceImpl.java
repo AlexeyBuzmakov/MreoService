@@ -1,27 +1,26 @@
 package com.example.clientinsurance.service.impl;
 
-import com.example.clientinsurance.dto.InsuranceDto;
-import com.example.clientinsurance.entity.InsuranceEntity;
-import com.example.clientinsurance.mapper.InsuranceMapper;
 import com.example.clientinsurance.repository.InsuranceRepository;
 import com.example.clientinsurance.service.InsuranceService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
 public class InsuranceServiceImpl implements InsuranceService {
     private final InsuranceRepository insuranceRepository;
-    private final InsuranceMapper insuranceMapper;
 
-    /**Метод возвращает InsuranceDto c спользованием Repository и
-     * Mapper для преобразования Entity в Dto
+    /**
+     * Метод проверяет авто на наличие страхования и просроченность(date_end)
+     * по информаии в базе данных по страхованию(insurance_table)
      */
-
     @Override
-    public InsuranceDto getInsuranceDto(String number) {
-        InsuranceEntity insuranceEntity = insuranceRepository.getClientEntityByNumberCar(number);
-        return insuranceMapper.getClientDto(insuranceEntity);
+    public boolean checkInsurance(String numberCar) {
+        if(insuranceRepository.getInsuranceByNumberCar(numberCar).isPresent()) {
+            return insuranceRepository.getInsuranceByNumberCar(numberCar).get().getDateEnd().isAfter(LocalDate.now());
+        }
+        return false;
     }
 }

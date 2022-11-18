@@ -8,28 +8,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import static com.example.clientmreo.controller.Links.MREO;
-import static com.example.clientmreo.controller.Links.REGISTRATION;
+import javax.validation.Valid;
 
 @RestController
-@RequestMapping(MREO)
+@RequestMapping("/mreo")
 @RequiredArgsConstructor
 public class MreoController {
     private final MreoService mreoService;
 
     /**
-     * Метод проверяет по входящим аргументам авто на наличие штрафов: таблица penalty_table,
-     * наличие страхования и её просроченность: таблица-insurance_table, колонка-date_end
-     * нахождение авто в угоне и дату возврата: таблица-hijacking_table, колонка-date_find
-     * В случае успешной проверки происходит добавление или обновление данных в таблицах
-     * car_table и owner_table
+     * Метод возвращает результат постановки авто на учёт в виде кода состояния http запроса
+     * 200 - авто успешно поставлено на учёт
+     * 400 - невозможно поставить авто на учёт по каким либо причинам
      */
-    @PostMapping(REGISTRATION)
-    public ResponseEntity<?> registration(@RequestBody OwnerCarDto ownerCarDto) {
-        if (mreoService.checkPenaltyHijackingInsurance(ownerCarDto))
-            return ResponseEntity.badRequest().build();
-        mreoService.updateOwnerCar(ownerCarDto);
-        return ResponseEntity.ok().build();
+    @PostMapping("/registration")
+    public ResponseEntity<?> registration(@Valid @RequestBody OwnerCarDto ownerCarDto) {
+        if(mreoService.registration(ownerCarDto))
+            return ResponseEntity.ok().body("Successfully");
+        return ResponseEntity.badRequest().body("Unsuccessfully");
     }
 }
 

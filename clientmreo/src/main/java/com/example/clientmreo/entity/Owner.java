@@ -1,23 +1,22 @@
 package com.example.clientmreo.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@Table(name = "owner_table")
-public class OwnerEntity {
+@Setter
+@Getter
+@Table(name = "owner")
+public class Owner {
     @Id
-    @SequenceGenerator(name = "owner_tableSequence", sequenceName = "owner_table_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "owner_tableSequence")
-    @Column(name = "owner_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "owner_id")
     private Long id;
 
     @Column(name = "owner_name")

@@ -1,6 +1,5 @@
 package com.example.clientmreo.service.impl;
 
-import com.example.clientmreo.dto.OwnerDto;
 import com.example.clientmreo.dto.OwnerCarDto;
 import com.example.clientmreo.mapper.MreoMapper;
 import com.example.clientmreo.repository.OwnerRepository;
@@ -21,14 +20,9 @@ public class OwnerServiceImpl implements OwnerService {
      */
     @Override
     @Transactional
-    public void updateOwnerTable(OwnerCarDto ownerCarDto) {
-        OwnerDto ownerDto = mreoMapper.getOwnerDto(ownerCarDto);
-        if(ownerRepository.getOwnerEntityByDriverLicense(ownerDto.getDriverLicense()) == null) {
-            ownerRepository.save(mreoMapper.getOwnerEntity(ownerDto));
+    public void updateOwner(OwnerCarDto ownerCarDto) {
+        if(ownerRepository.getOwnerByDriverLicense(ownerCarDto.getDriverLicense()).isEmpty()) {
+            ownerRepository.save(mreoMapper.getOwner(ownerCarDto));
         }
-    }
-    @Override
-    public Long getIdOwner(String driverLicense) {
-        return ownerRepository.getOwnerEntityByDriverLicense(driverLicense).getId();
     }
 }

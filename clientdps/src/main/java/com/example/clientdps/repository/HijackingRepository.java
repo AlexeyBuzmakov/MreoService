@@ -1,11 +1,13 @@
 package com.example.clientdps.repository;
 
-import com.example.clientdps.entity.HijackingEntity;
+import com.example.clientdps.entity.Hijacking;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface HijackingRepository extends JpaRepository<HijackingEntity, Long> {
+import java.util.Optional;
+
+public interface HijackingRepository extends JpaRepository<Hijacking, Long> {
     /**
-     * Метод возвращает HijackingEntity по vin_number из таблицы hijacking_table
+     * Метод возвращает Hijacking по vin_number из таблицы hijacking_table
      */
-    HijackingEntity getHijackingEntityByVinNumber(String vinNumber);
+    Optional<Hijacking> getHijackingEntityByVinNumber(String vinNumber);
 }
